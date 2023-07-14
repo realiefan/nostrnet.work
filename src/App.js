@@ -223,7 +223,7 @@ const getDefaultEmbedsData = () => {
     active: false,
   },
     { id: 'zaplife-embed', url: 'https://zaplife.lol/', title: 'Zaplife', active: false },
-    { id: 'nostrnests-embed', url: 'https://highlighter.com/', title: 'Highlighter', active: false },
+    { id: 'nostrnests-embed', url: 'https://highlighter.com/global/newest', title: 'Highlighter', active: false },
     
   ];
 };
