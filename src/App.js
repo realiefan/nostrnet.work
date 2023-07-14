@@ -137,7 +137,7 @@ const App = () => {
         </nav>
       ) : (
         <div className="pt-1 mb-0">
-          <a href="https://nostrnetwork-iefan.vercel.app" rel="noopener noreferrer">
+          <a href="https://nostrnet.work" rel="noopener noreferrer">
               <button className="px-4 py-1 text-sm mr-2 rounded bg-gray-800 font-bold text-white ">
                 Home
               </button>
