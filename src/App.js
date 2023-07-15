@@ -98,7 +98,7 @@ const App = () => {
         <div>
           <div style={{ position: 'fixed', left: '7%', top: '17%' }}>
             <h1 className="text-4xl font-bold mt-4 mb-4">NostrNet.work</h1>
-            <h2 className="text-l font-bold mr-8 mb-4">Dashboard For Micro-App & use any website as PWA.</h2>
+            <h2 className="text-l font-bold mr-8 mb-4">Dashboard For your Nostr WebApps & use any website as PWA.</h2>
           </div>
           <div style={{ position: 'fixed', left: '85%', bottom: '0' }}>
             <button className="px-4 py-2 text-sm rounded font-bold text-white" onClick={handleDeleteAllClick}>
