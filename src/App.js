@@ -114,8 +114,8 @@ const App = () => {
             {embeds.map((embed) => (
               <button
                 key={embed.id}
-                className={`menu-item px-2 py-2 font-bold text-1xl rounded ${
-                  embed.active ? 'bg-gray-600 text-xxs hover:bg-blue-700' : 'bg-gray-800 hover:bg-gray-700'
+                className={`menu-item px-2 py-2 font-bold text-lg rounded ${
+                  embed.active ? 'bg-gray-600 hover:bg-blue-700' : 'bg-gray-800 hover:bg-gray-700'
                 }`}
                 onClick={() => toggleEmbed(embed.id)}
                 aria-label={`${embed.active ? 'Hide' : 'Show'} ${embed.title}`}
