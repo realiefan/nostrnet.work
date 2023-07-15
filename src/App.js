@@ -137,16 +137,17 @@ const App = () => {
         </nav>
       ) : (
         <div className="pt-1 mb-0">
+        <a href="https://nostrapp.link/" rel="noopener noreferrer">
+              <button className="px-4 py-1 text-sm mr-2 rounded bg-gray-800 font-bold text-white ">
+                App Store
+              </button>
+            </a>
           <a href="https://nostrnet.work" rel="noopener noreferrer">
               <button className="px-4 py-1 text-sm mr-2 rounded bg-gray-800 font-bold text-white ">
                 Home
               </button>
             </a>
-          <a href="https://nostrapp.link/" rel="noopener noreferrer">
-              <button className="px-4 py-1 text-sm mr-2 rounded bg-gray-800 font-bold text-white ">
-                App Store
-              </button>
-            </a>
+          
           {showSecondMenu ? (
             <button
               className="px-4 py-1 text-sm rounded mr-2 bg-gray-800 font-bold text-white "
