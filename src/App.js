@@ -93,13 +93,16 @@ const App = () => {
   };
 
   return (
-    <div className="bg-black text-white min-h-screen flex flex-col justify-center items-center">
+    <div className="bg-black text-white min-h-screen  flex flex-col justify-center items-center">
       {!buttonClicked && (
         <div>
-          <div style={{ position: 'fixed', left: '7%', top: '17%' }}>
-            <h1 className="text-4xl font-bold mt-4 mb-4">NostrNet.work</h1>
-            <h2 className="text-l font-bold mr-8 mb-4">Dashboard For your Nostr WebApps & use any website as PWA.</h2>
+          <div style={{ position: 'fixed', left: '40%', top: '15%', transform: 'translate(-50%, -50%)' }}>
+            <div>
+              <h1 className="text-3xl font-bold mt-4 mb-4">NostrNet.work</h1>
+              <h2 className="text-sm font-bold  mb-4">Dashboard For your Nostr WebApps & use any website as PWA.</h2>
+            </div>
           </div>
+
           <div style={{ position: 'fixed', left: '85%', bottom: '0' }}>
             <button className="px-4 py-2 text-sm rounded font-bold text-white" onClick={handleDeleteAllClick}>
               Reset
@@ -108,9 +111,9 @@ const App = () => {
         </div>
       )}
 
-      {!embeds.some((embed) => embed.active) && !showSecondMenu ? ( // Hide the second grid menu conditionally
-        <nav className="flex justify-center mb-0">
-          <div className="grid grid-cols-3 gap-4 mt-2">
+        {!embeds.some((embed) => embed.active) && !showSecondMenu ? (
+          <nav className="flex justify-center mb-0">
+          <div className="grid grid-cols-3 gap-4 mt-2 mx-auto max-w-2xl md:max-w-4xl md:grid-cols-5 lg:grid-cols-8">
             {embeds.map((embed) => (
               <button
                 key={embed.id}
@@ -135,22 +138,24 @@ const App = () => {
             )}
           </div>
         </nav>
-      ) : (
+
+      ): 
+      (
         <div className="pt-1 mb-0">
         <a href="https://nostrapp.link/" rel="noopener noreferrer">
-              <button className="px-4 py-1 text-sm mr-2 rounded bg-gray-800 font-bold text-white ">
+              <button className="px-4 py-1 text-sm mr-2 rounded bg-gray-900 font-bold text-gray-200 ">
                 App Store
               </button>
             </a>
           <a href="https://nostrnet.work" rel="noopener noreferrer">
-              <button className="px-4 py-1 text-sm mr-2 rounded bg-gray-800 font-bold text-white ">
+              <button className="px-4 py-1 text-sm mr-2 rounded bg-gray-900 font-bold text-gray-200 ">
                 Home
               </button>
             </a>
           
           {showSecondMenu ? (
             <button
-              className="px-4 py-1 text-sm rounded mr-2 bg-gray-800 font-bold text-white "
+              className="px-4 py-1 text-sm rounded mr-2 bg-purple-900 font-bold  text-gray-200 "
               onClick={() => setShowSecondMenu(false)}
             >
               Hide Menu
@@ -159,7 +164,7 @@ const App = () => {
             
           ) : (
             <button
-              className="px-4 py-1 text-sm mr-2 rounded bg-gray-800 font-bold text-white "
+              className="px-4 py-1 text-sm mr-2 rounded bg-gray-900 font-bold text-gray-200 "
               onClick={() => setShowSecondMenu(true)}
             >
               Show Menu
@@ -219,6 +224,8 @@ const App = () => {
       )}
     </div>
   );
+
+  
 };
 
 const getDefaultEmbedsData = () => {
