@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 
 import './App.css';
 import Modal from './Modal';
@@ -41,70 +41,39 @@ const App = () => {
     setCustomEmbeds((prevCustomEmbeds) => [...prevCustomEmbeds, newEmbed]);
   }, []);
 
-  const deleteCustomEmbeds = () => {
+  const deleteCustomEmbeds = useCallback(() => {
     setCustomEmbeds([]);
     setEmbeds((prevEmbeds) => prevEmbeds.filter((embed) => !embed.id.startsWith('custom-')));
     localStorage.removeItem(EMBEDS_DATA_KEY);
-  };
+  }, []);
 
   useEffect(() => {
     const storedEmbedsData = localStorage.getItem(EMBEDS_DATA_KEY);
     const storedEmbeds = storedEmbedsData ? JSON.parse(storedEmbedsData) : getEmbedsData();
     setEmbeds(storedEmbeds);
-  
-    const handlePageUnload = () => {
-      const activeEmbed = embeds.find((embed) => embed.active);
-      if (activeEmbed) {
-        localStorage.setItem('activeEmbedId', activeEmbed.id);
-      }
-    };
-  
-    const handlePageReload = () => {
-      const activeEmbedId = localStorage.getItem('activeEmbedId');
-      if (activeEmbedId) {
-        setEmbeds((prevEmbeds) =>
-          prevEmbeds.map((embed) => ({
-            ...embed,
-            active: embed.id === activeEmbedId,
-          }))
-        );
-        setButtonClicked(true);
-      }
-    };
-  
-    handlePageReload(); // Call the function immediately on page load
-  
-    window.addEventListener('beforeunload', handlePageUnload);
-  
-    return () => {
-      window.removeEventListener('beforeunload', handlePageUnload);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Empty dependency array
-  
-  
+  }, []);
 
-  const handleAddClick = () => {
+  const handleAddClick = useCallback(() => {
     setShowModal(true);
-  };
+  }, []);
 
-  const handleSaveClick = () => {
+  const handleSaveClick = useCallback(() => {
     if (url && title) {
       addCustomEmbed(url, title);
       setShowModal(false);
       setUrl('');
       setTitle('');
     }
-  };
+  }, [url, title, addCustomEmbed]);
 
-  const handleDeleteAllClick = () => {
+  const handleDeleteAllClick = useCallback(() => {
     const confirmDelete = window.confirm('Are you sure you want to delete all custom embeds?');
     if (confirmDelete) {
       deleteCustomEmbeds();
     }
-  };
+  }, [deleteCustomEmbeds]);
 
-  const handleHomeButtonClick = () => {
+  const handleHomeButtonClick = useCallback(() => {
     setEmbeds((prevEmbeds) =>
       prevEmbeds.map((embed) => ({
         ...embed,
@@ -112,10 +81,17 @@ const App = () => {
       }))
     );
     setButtonClicked(false);
-  };
+  }, []);
+
+  const memoizedEmbeds = useMemo(() => {
+    return embeds.map((embed) => ({
+      ...embed,
+      handleClick: () => toggleEmbed(embed.id),
+    }));
+  }, [embeds, toggleEmbed]);
 
   return (
-    <div className="bg-black text-white min-h-screen flex flex-col pb-80 justify-center items-center">
+    <div className="bg-black text-white min-h-screen flex flex-col justify-center items-center w-screen">
       {!buttonClicked && (
         <div style={{ position: 'relative', marginBottom: '2rem' }}>
           <div>
@@ -132,13 +108,13 @@ const App = () => {
       {!embeds.some((embed) => embed.active) && !showSecondMenu ? (
         <nav className="flex justify-center mb-0">
           <div className="grid grid-cols-3 gap-4 mt-2 mx-auto max-w-2xl md:max-w-4xl md:grid-cols-5 lg:grid-cols-8">
-            {embeds.map((embed) => (
+            {memoizedEmbeds.map((embed) => (
               <button
                 key={embed.id}
                 className={`menu-item px-2 py-2 font-bold text-sm rounded ${
                   embed.active ? 'bg-gray-600 hover:bg-blue-700' : 'bg-gray-800 hover:bg-gray-700'
                 }`}
-                onClick={() => toggleEmbed(embed.id)}
+                onClick={embed.handleClick}
                 aria-label={`${embed.active ? 'Hide' : 'Show'} ${embed.title}`}
               >
                 <span className="embed-title">{embed.title}</span>
@@ -163,7 +139,7 @@ const App = () => {
               App Store
             </button>
           </a>
-          <a  rel="noopener noreferrer">
+          <a rel="noopener noreferrer">
             <button
               className="px-4 py-1 text-sm mr-2 rounded bg-gray-900 font-bold text-gray-200"
               onClick={handleHomeButtonClick}
@@ -191,13 +167,13 @@ const App = () => {
       {showSecondMenu && (
         <nav className="flex justify-center mb-0">
           <div className="grid grid-cols-3 gap-4 mt-2">
-            {embeds.map((embed) => (
+            {memoizedEmbeds.map((embed) => (
               <button
                 key={embed.id}
                 className={`menu-item px-2 py-2 font-bold text-sm rounded ${
                   embed.active ? 'bg-blue-600 text-sm hover:bg-blue-700' : 'bg-gray-800 hover:bg-blue-700'
                 }`}
-                onClick={() => toggleEmbed(embed.id)}
+                onClick={embed.handleClick}
                 aria-label={`${embed.active ? 'Hide' : 'Show'} ${embed.title}`}
               >
                 <span className="embed-title">{embed.title}</span>
@@ -217,7 +193,7 @@ const App = () => {
         </nav>
       )}
       <div className="flex flex-col items-center mt-2">
-        {embeds.map((embed) => (
+        {memoizedEmbeds.map((embed) => (
           <div key={embed.id} className={`embed-container ${embed.active ? 'active' : ''}`}>
             {embed.active && (
               <iframe src={embed.url} frameBorder="0" scrolling="yes" className="embed-iframe" title={embed.title} />
@@ -266,6 +242,5 @@ const getDefaultEmbedsData = () => {
     },
   ];
 };
-
 
 export default App;
