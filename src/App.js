@@ -91,7 +91,7 @@ const App = () => {
   }, [embeds, toggleEmbed]);
 
   return (
-    <div className="bg-black text-white min-h-screen flex flex-col justify-center items-center w-screen">
+    <div className="bg-black text-white min-h-screen flex flex-col justify-start items-center w-screen">
       {!buttonClicked && (
         <div style={{ position: 'relative', marginBottom: '2rem' }}>
           <div>
@@ -134,11 +134,7 @@ const App = () => {
         </nav>
       ) : (
         <div className="pt-1 mb-0">
-          <a href="https://nostrapp.link/" rel="noopener noreferrer">
-            <button className="px-4 py-1 text-sm mr-2 rounded bg-gray-900 font-bold text-gray-200 ">
-              App Store
-            </button>
-          </a>
+          
           <a rel="noopener noreferrer">
             <button
               className="px-4 py-1 text-sm mr-2 rounded bg-gray-900 font-bold text-gray-200"
