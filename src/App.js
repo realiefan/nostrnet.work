@@ -1,21 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
+
 import './App.css';
 import Modal from './Modal';
 
 const EMBEDS_DATA_KEY = 'embedsData';
 
 const App = () => {
-  const initialEmbedsData = localStorage.getItem(EMBEDS_DATA_KEY);
-  const embedsData = initialEmbedsData ? JSON.parse(initialEmbedsData) : getDefaultEmbedsData();
-
-  const [embeds, setEmbeds] = useState(embedsData);
-  const [customEmbeds, setCustomEmbeds] = useState([]);
+  const [embeds, setEmbeds] = useState(getEmbedsData());
+  const [, setCustomEmbeds] = useState([]);
   const [buttonClicked, setButtonClicked] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [url, setUrl] = useState('');
   const [title, setTitle] = useState('');
-  const [showSecondMenu, setShowSecondMenu] = useState(false); // Define the state variable for the second menu
+  const [showSecondMenu, setShowSecondMenu] = useState(false);
 
   const toggleEmbed = useCallback((embedId) => {
     setEmbeds((prevEmbeds) =>
@@ -52,8 +49,18 @@ const App = () => {
 
   useEffect(() => {
     const storedEmbedsData = localStorage.getItem(EMBEDS_DATA_KEY);
-    const storedEmbeds = storedEmbedsData ? JSON.parse(storedEmbedsData) : embedsData;
+    const storedEmbeds = storedEmbedsData ? JSON.parse(storedEmbedsData) : getEmbedsData();
     setEmbeds(storedEmbeds);
+
+    const handlePageUnload = () => {
+      setEmbeds((prevEmbeds) =>
+        prevEmbeds.map((embed) => ({
+          ...embed,
+          active: false,
+        }))
+      );
+      setButtonClicked(false);
+    };
 
     window.addEventListener('beforeunload', handlePageUnload);
 
@@ -61,16 +68,6 @@ const App = () => {
       window.removeEventListener('beforeunload', handlePageUnload);
     };
   }, []);
-
-  const handlePageUnload = () => {
-    setEmbeds((prevEmbeds) =>
-      prevEmbeds.map((embed) => ({
-        ...embed,
-        active: false,
-      }))
-    );
-    setButtonClicked(false);
-  };
 
   const handleAddClick = () => {
     setShowModal(true);
@@ -94,22 +91,21 @@ const App = () => {
 
   return (
     <div className="bg-black text-white min-h-screen flex flex-col pb-80 justify-center items-center">
-    {!buttonClicked && (
-      <div style={{ position: 'relative', marginBottom: '2rem' }}>
-      <div>
-        <h1 className="text-3xl font-bold mt-4 px-5 mb-2">NostrNet.work</h1>
-        <h2 className="text-sm font-bold mb-4 px-5">Dashboard for your Nostr WebApps & use any website as PWA.</h2>
-      </div>
-
-        <div style={{ position: 'fixed', right: '5%', bottom: '0' }}>
-          <button className="px-4 py-2 text-sm rounded font-bold text-white" onClick={handleDeleteAllClick}>
-            Reset
-          </button>
+      {!buttonClicked && (
+        <div style={{ position: 'relative', marginBottom: '2rem' }}>
+          <div>
+            <h1 className="text-3xl font-bold mt-4 px-5 mb-2">NostrNet.work</h1>
+            <h2 className="text-sm font-bold mb-4 px-5">Dashboard for your Nostr WebApps & use any website as PWA.</h2>
+          </div>
+          <div style={{ position: 'fixed', right: '5%', bottom: '0' }}>
+            <button className="px-4 py-2 text-sm rounded font-bold text-white" onClick={handleDeleteAllClick}>
+              Reset
+            </button>
+          </div>
         </div>
-      </div>
-    )}
-        {!embeds.some((embed) => embed.active) && !showSecondMenu ? (
-          <nav className="flex justify-center mb-0">
+      )}
+      {!embeds.some((embed) => embed.active) && !showSecondMenu ? (
+        <nav className="flex justify-center mb-0">
           <div className="grid grid-cols-3 gap-4 mt-2 mx-auto max-w-2xl md:max-w-4xl md:grid-cols-5 lg:grid-cols-8">
             {embeds.map((embed) => (
               <button
@@ -135,21 +131,18 @@ const App = () => {
             )}
           </div>
         </nav>
-
-      ): 
-      (
+      ) : (
         <div className="pt-1 mb-0">
-        <a href="https://nostrapp.link/" rel="noopener noreferrer">
-              <button className="px-4 py-1 text-sm mr-2 rounded bg-gray-900 font-bold text-gray-200 ">
-                App Store
-              </button>
-            </a>
+          <a href="https://nostrapp.link/" rel="noopener noreferrer">
+            <button className="px-4 py-1 text-sm mr-2 rounded bg-gray-900 font-bold text-gray-200 ">
+              App Store
+            </button>
+          </a>
           <a href="https://nostrnet.work" rel="noopener noreferrer">
-              <button className="px-4 py-1 text-sm mr-2 rounded bg-gray-900 font-bold text-gray-200 ">
-                Home
-              </button>
-            </a>
-          
+            <button className="px-4 py-1 text-sm mr-2 rounded bg-gray-900 font-bold text-gray-200 ">
+              Home
+            </button>
+          </a>
           {showSecondMenu ? (
             <button
               className="px-4 py-1 text-sm rounded mr-2 bg-purple-900 font-bold  text-gray-200 "
@@ -157,8 +150,6 @@ const App = () => {
             >
               Hide Menu
             </button>
-            
-            
           ) : (
             <button
               className="px-4 py-1 text-sm mr-2 rounded bg-gray-900 font-bold text-gray-200 "
@@ -169,8 +160,7 @@ const App = () => {
           )}
         </div>
       )}
-
-      {showSecondMenu && ( // Render the second grid menu when showSecondMenu is true
+      {showSecondMenu && (
         <nav className="flex justify-center mb-0">
           <div className="grid grid-cols-3 gap-4 mt-2">
             {embeds.map((embed) => (
@@ -198,7 +188,6 @@ const App = () => {
           </div>
         </nav>
       )}
-
       <div className="flex flex-col items-center mt-2">
         {embeds.map((embed) => (
           <div key={embed.id} className={`embed-container ${embed.active ? 'active' : ''}`}>
@@ -208,7 +197,6 @@ const App = () => {
           </div>
         ))}
       </div>
-
       {showModal && (
         <Modal
           url={url}
@@ -221,23 +209,35 @@ const App = () => {
       )}
     </div>
   );
+};
 
-  
+const getEmbedsData = () => {
+  const initialEmbedsData = localStorage.getItem(EMBEDS_DATA_KEY);
+  return initialEmbedsData ? JSON.parse(initialEmbedsData) : getDefaultEmbedsData();
 };
 
 const getDefaultEmbedsData = () => {
-  return [{
-    id: 'nostrchat-embed',
-    url: 'https://snort.social/notes',
-    title: 'Snort',
-    active: false,
-  },
-    { id: 'zaplife-embed', url: 'https://zaplife.lol/', title: 'Zaplife', active: false },
-    { id: 'nostrnests-embed', url: 'https://highlighter.com/global/newest', title: 'Highlighter', active: false },
-    
+  return [
+    {
+      id: 'nostrchat-embed',
+      url: 'https://snort.social/notes',
+      title: 'Snort',
+      active: false,
+    },
+    {
+      id: 'zaplife-embed',
+      url: 'https://zaplife.lol/',
+      title: 'Zaplife',
+      active: false,
+    },
+    {
+      id: 'nostrnests-embed',
+      url: 'https://highlighter.com/global/newest',
+      title: 'Highlighter',
+      active: false,
+    },
   ];
 };
-
 
 App.propTypes = {
   // PropTypes definition here
