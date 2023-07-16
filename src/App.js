@@ -93,31 +93,30 @@ const App = () => {
   };
 
   return (
-    <div className="bg-black text-white min-h-screen  flex flex-col justify-center items-center">
-      {!buttonClicked && (
-        <div>
-          <div style={{ position: 'fixed', left: '40%', top: '15%', transform: 'translate(-50%, -50%)' }}>
-            <div>
-              <h1 className="text-3xl font-bold mt-4 mb-4">NostrNet.work</h1>
-              <h2 className="text-sm font-bold  mb-4">Dashboard For your Nostr WebApps & use any website as PWA.</h2>
-            </div>
-          </div>
-
-          <div style={{ position: 'fixed', left: '85%', bottom: '0' }}>
-            <button className="px-4 py-2 text-sm rounded font-bold text-white" onClick={handleDeleteAllClick}>
-              Reset
-            </button>
+    <div className="bg-black text-white min-h-screen flex flex-col justify-center items-center">
+    {!buttonClicked && (
+      <div>
+        <div style={{ position: 'fixed', left: '38%', top: '15%', transform: 'translateX(-50%)' }}>
+          <div>
+            <h1 className="text-3xl font-bold mt-4 mb-2">NostrNet.work</h1>
+            <h2 className="text-sm font-bold mb-4">Dashboard for your Nostr WebApps & use any website as PWA.</h2>
           </div>
         </div>
-      )}
 
+        <div style={{ position: 'fixed', right: '5%', bottom: '0' }}>
+          <button className="px-4 py-2 text-sm rounded font-bold text-white" onClick={handleDeleteAllClick}>
+            Reset
+          </button>
+        </div>
+      </div>
+    )}
         {!embeds.some((embed) => embed.active) && !showSecondMenu ? (
           <nav className="flex justify-center mb-0">
           <div className="grid grid-cols-3 gap-4 mt-2 mx-auto max-w-2xl md:max-w-4xl md:grid-cols-5 lg:grid-cols-8">
             {embeds.map((embed) => (
               <button
                 key={embed.id}
-                className={`menu-item px-2 py-2 font-bold text-sm rounded ${
+                className={`menu-item px-2 py-2 font-bold text-m rounded ${
                   embed.active ? 'bg-gray-600 hover:bg-blue-700' : 'bg-gray-800 hover:bg-gray-700'
                 }`}
                 onClick={() => toggleEmbed(embed.id)}
