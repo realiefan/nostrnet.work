@@ -220,8 +220,8 @@ const getDefaultEmbedsData = () => {
   return [
     {
       id: 'nostrchat-embed',
-      url: 'https://snort.social/notes',
-      title: 'Snort',
+      url: 'https://satellite.earth/',
+      title: 'Satellite',
       active: false,
     },
     {
