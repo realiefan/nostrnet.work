@@ -5,9 +5,15 @@ import Modal from './Modal';
 
 const EMBEDS_DATA_KEY = 'embedsData';
 
+const BUTTON_LABELS = {
+  add: 'Add',
+  reset: 'Reset',
+  showMenu: 'Show Menu',
+  hideMenu: 'Hide Menu',
+};
+
 const App = () => {
   const [embeds, setEmbeds] = useState(getEmbedsData());
-  const [, setCustomEmbeds] = useState([]);
   const [buttonClicked, setButtonClicked] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [url, setUrl] = useState('');
@@ -37,12 +43,9 @@ const App = () => {
       localStorage.setItem(EMBEDS_DATA_KEY, JSON.stringify(updatedEmbeds));
       return updatedEmbeds;
     });
-
-    setCustomEmbeds((prevCustomEmbeds) => [...prevCustomEmbeds, newEmbed]);
   }, []);
 
   const deleteCustomEmbeds = () => {
-    setCustomEmbeds([]);
     setEmbeds((prevEmbeds) => prevEmbeds.filter((embed) => !embed.id.startsWith('custom-')));
     localStorage.removeItem(EMBEDS_DATA_KEY);
   };
@@ -51,14 +54,14 @@ const App = () => {
     const storedEmbedsData = localStorage.getItem(EMBEDS_DATA_KEY);
     const storedEmbeds = storedEmbedsData ? JSON.parse(storedEmbedsData) : getEmbedsData();
     setEmbeds(storedEmbeds);
-  
+
     const handlePageUnload = () => {
       const activeEmbed = embeds.find((embed) => embed.active);
       if (activeEmbed) {
         localStorage.setItem('activeEmbedId', activeEmbed.id);
       }
     };
-  
+
     const handlePageReload = () => {
       const activeEmbedId = localStorage.getItem('activeEmbedId');
       if (activeEmbedId) {
@@ -71,17 +74,15 @@ const App = () => {
         setButtonClicked(true);
       }
     };
-  
+
     window.addEventListener('beforeunload', handlePageUnload);
     window.addEventListener('load', handlePageReload);
-  
+
     return () => {
       window.removeEventListener('beforeunload', handlePageUnload);
       window.removeEventListener('load', handlePageReload);
     };
   }, []);
-  
-  
 
   const handleAddClick = () => {
     setShowModal(true);
@@ -103,6 +104,8 @@ const App = () => {
     }
   };
 
+  const activeEmbed = embeds.find((embed) => embed.active);
+
   return (
     <div className="bg-black text-white min-h-screen flex flex-col pb-80 justify-center items-center">
       {!buttonClicked && (
@@ -113,12 +116,12 @@ const App = () => {
           </div>
           <div style={{ position: 'fixed', right: '5%', bottom: '0' }}>
             <button className="px-4 py-2 text-sm rounded font-bold text-white" onClick={handleDeleteAllClick}>
-              Reset
+              {BUTTON_LABELS.reset}
             </button>
           </div>
         </div>
       )}
-      {!embeds.some((embed) => embed.active) && !showSecondMenu ? (
+      {!activeEmbed && !showSecondMenu ? (
         <nav className="flex justify-center mb-0">
           <div className="grid grid-cols-3 gap-4 mt-2 mx-auto max-w-2xl md:max-w-4xl md:grid-cols-5 lg:grid-cols-8">
             {embeds.map((embed) => (
@@ -133,14 +136,14 @@ const App = () => {
                 <span className="embed-title">{embed.title}</span>
               </button>
             ))}
-            {!embeds.some((embed) => embed.active) && (
+            {!activeEmbed && (
               <button
                 className={`px-4 py-2 text-sm rounded bg-purple-600 font-bold text-white ${
                   buttonClicked ? 'text-sm' : ''
                 }`}
                 onClick={handleAddClick}
               >
-                Add
+                {BUTTON_LABELS.add}
               </button>
             )}
           </div>
@@ -162,14 +165,14 @@ const App = () => {
               className="px-4 py-1 text-sm rounded mr-2 bg-purple-900 font-bold  text-gray-200 "
               onClick={() => setShowSecondMenu(false)}
             >
-              Hide Menu
+              {BUTTON_LABELS.hideMenu}
             </button>
           ) : (
             <button
               className="px-4 py-1 text-sm mr-2 rounded bg-gray-900 font-bold text-gray-200 "
               onClick={() => setShowSecondMenu(true)}
             >
-              Show Menu
+              {BUTTON_LABELS.showMenu}
             </button>
           )}
         </div>
@@ -189,27 +192,25 @@ const App = () => {
                 <span className="embed-title">{embed.title}</span>
               </button>
             ))}
-            {!embeds.some((embed) => embed.active) && (
+            {!activeEmbed && (
               <button
                 className={`px-4 py-2 text-sm rounded bg-purple-600 font-bold text-white ${
                   buttonClicked ? 'text-sm' : ''
                 }`}
                 onClick={handleAddClick}
               >
-                Add
+                {BUTTON_LABELS.add}
               </button>
             )}
           </div>
         </nav>
       )}
       <div className="flex flex-col items-center mt-2">
-        {embeds.map((embed) => (
-          <div key={embed.id} className={`embed-container ${embed.active ? 'active' : ''}`}>
-            {embed.active && (
-              <iframe src={embed.url} frameBorder="0" scrolling="yes" className="embed-iframe" title={embed.title} />
-            )}
+        {activeEmbed && (
+          <div key={activeEmbed.id} className="embed-container active">
+            <iframe src={activeEmbed.url} frameBorder="0" scrolling="yes" className="embed-iframe" title={activeEmbed.title} />
           </div>
-        ))}
+        )}
       </div>
       {showModal && (
         <Modal
@@ -252,6 +253,5 @@ const getDefaultEmbedsData = () => {
     },
   ];
 };
-
 
 export default App;
