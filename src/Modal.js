@@ -23,7 +23,9 @@ const Modal = ({ url, title, setUrl, setTitle, handleSaveClick, handleClose }) =
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="bg-gray-700 rounded shadow-lg p-6 w-96">
-        <h2 className="text-lg font-semibold mb-4">Add Custom Embed</h2>
+        <h2 className="text-sm font-semibold mb-4">Add new WebApps of your choice. You can also
+         discover the latest Nostr services by clicking the 'App Store' button and
+          copying/pasting the link here.</h2>
         <input
           type="url"
           className="w-full py-2 px-4 text-gray-500 rounded border border-gray-300 mb-4"
@@ -40,21 +42,29 @@ const Modal = ({ url, title, setUrl, setTitle, handleSaveClick, handleClose }) =
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <div className="flex justify-end">
-          <button
-            className="py-2 px-4 font-bold bg-blue-500 text-white rounded mr-2"
-            onClick={handleSaveClick}
-            disabled={!url.startsWith('http')}
-          >
-            Save
-          </button>
-          <button className="py-2 px-4 font-bold bg-gray-500 text-gray-100 rounded" onClick={handleClose}>
-            Cancel
-          </button>
+        <div className="flex justify-between">
+          <a href="https://nostrapp.link/" rel="noopener noreferrer">
+            <button className="px-4 py-1 text-sm rounded bg-purple-700 font-bold text-gray-200">
+              App Store
+            </button>
+          </a>
+          <div>
+            <button
+              className="py-1.5 px-4 font-bold bg-blue-600 text-sm text-white rounded mr-2"
+              onClick={handleSaveClick}
+              disabled={!url.startsWith('http')}
+            >
+              Save
+            </button>
+            <button className="py-1.5 px-4 font-bold text-sm bg-gray-500 text-gray-100 rounded" onClick={handleClose}>
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
+  
 };
 
 Modal.propTypes = {
