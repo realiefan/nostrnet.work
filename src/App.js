@@ -51,23 +51,37 @@ const App = () => {
     const storedEmbedsData = localStorage.getItem(EMBEDS_DATA_KEY);
     const storedEmbeds = storedEmbedsData ? JSON.parse(storedEmbedsData) : getEmbedsData();
     setEmbeds(storedEmbeds);
-
+  
     const handlePageUnload = () => {
-      setEmbeds((prevEmbeds) =>
-        prevEmbeds.map((embed) => ({
-          ...embed,
-          active: false,
-        }))
-      );
-      setButtonClicked(false);
+      const activeEmbed = embeds.find((embed) => embed.active);
+      if (activeEmbed) {
+        localStorage.setItem('activeEmbedId', activeEmbed.id);
+      }
     };
-
+  
+    const handlePageReload = () => {
+      const activeEmbedId = localStorage.getItem('activeEmbedId');
+      if (activeEmbedId) {
+        setEmbeds((prevEmbeds) =>
+          prevEmbeds.map((embed) => ({
+            ...embed,
+            active: embed.id === activeEmbedId,
+          }))
+        );
+        setButtonClicked(true);
+      }
+    };
+  
     window.addEventListener('beforeunload', handlePageUnload);
-
+    window.addEventListener('load', handlePageReload);
+  
     return () => {
       window.removeEventListener('beforeunload', handlePageUnload);
+      window.removeEventListener('load', handlePageReload);
     };
   }, []);
+  
+  
 
   const handleAddClick = () => {
     setShowModal(true);
@@ -239,24 +253,5 @@ const getDefaultEmbedsData = () => {
   ];
 };
 
-App.propTypes = {
-  // PropTypes definition here
-};
-
-const EmbedButton = ({ embed, active, buttonClicked, toggleEmbed }) => {
-  // EmbedButton component code here
-};
-
-EmbedButton.propTypes = {
-  // PropTypes definition here
-};
-
-const EmbedContainer = ({ embed }) => {
-  // EmbedContainer component code here
-};
-
-EmbedContainer.propTypes = {
-  // PropTypes definition here
-};
 
 export default App;
