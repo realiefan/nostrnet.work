@@ -6,24 +6,21 @@ import Modal from './Modal';
 const EMBEDS_DATA_KEY = 'embedsData';
 
 const App = () => {
-  const [embeds, setEmbeds] = useState(getEmbedsData().map((embed) => ({ ...embed, loading: false })));
+  const [embeds, setEmbeds] = useState(getEmbedsData());
   const [, setCustomEmbeds] = useState([]);
   const [buttonClicked, setButtonClicked] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [url, setUrl] = useState('');
   const [title, setTitle] = useState('');
   const [showSecondMenu, setShowSecondMenu] = useState(false);
-  const [activeEmbedId, setActiveEmbedId] = useState(null);
 
   const toggleEmbed = useCallback((embedId) => {
     setEmbeds((prevEmbeds) =>
       prevEmbeds.map((embed) => ({
         ...embed,
         active: embed.id === embedId,
-        loading: embed.id === embedId ? true : embed.loading,
       }))
     );
-    setActiveEmbedId(embedId);
     setButtonClicked(true);
   }, []);
 
@@ -53,7 +50,7 @@ const App = () => {
   useEffect(() => {
     const storedEmbedsData = localStorage.getItem(EMBEDS_DATA_KEY);
     const storedEmbeds = storedEmbedsData ? JSON.parse(storedEmbedsData) : getEmbedsData();
-    setEmbeds(storedEmbeds.map((embed) => ({ ...embed, loading: false })));
+    setEmbeds(storedEmbeds);
   }, []);
 
   const handleAddClick = useCallback(() => {
@@ -77,7 +74,12 @@ const App = () => {
   }, [deleteCustomEmbeds]);
 
   const handleHomeButtonClick = useCallback(() => {
-    setActiveEmbedId(null);
+    setEmbeds((prevEmbeds) =>
+      prevEmbeds.map((embed) => ({
+        ...embed,
+        active: false,
+      }))
+    );
     setButtonClicked(false);
   }, []);
 
@@ -94,7 +96,8 @@ const App = () => {
         <div style={{ position: 'relative', marginBottom: '2rem' }}>
           <div>
             <h1 className="text-3xl font-bold mt-4 px-5 mb-2">NostrNet.work</h1>
-            <h2 className="text-sm font-bold mb-4 px-5">One PWA to organize all Nostr WebApps and other PWAs & use any website as a Native App. (Mobile only)</h2>
+             <h2 className="text-sm font-bold mb-4 px-5">One PWA to organize all Nostr WebApps and other PWAs
+              & use any website as a Native App. (Mobile only)</h2>
           </div>
           <div style={{ position: 'fixed', right: '5%', bottom: '0' }}>
             <button className="px-4 py-2 text-sm rounded font-bold text-white" onClick={handleDeleteAllClick}>
@@ -132,6 +135,7 @@ const App = () => {
         </nav>
       ) : (
         <div className="pt-1 mb-0">
+          
           <a rel="noopener noreferrer">
             <button
               className="px-4 py-1 text-sm mr-2 rounded bg-gray-900 font-bold text-gray-200"
@@ -142,7 +146,7 @@ const App = () => {
           </a>
           {showSecondMenu ? (
             <button
-              className="px-4 py-1 text-sm rounded mr-2 bg-purple-900 font-bold text-gray-200 "
+              className="px-4 py-1 text-sm rounded mr-2 bg-purple-900 font-bold  text-gray-200 "
               onClick={() => setShowSecondMenu(false)}
             >
               Hide Menu
@@ -188,26 +192,8 @@ const App = () => {
       <div className="flex flex-col items-center mt-2">
         {memoizedEmbeds.map((embed) => (
           <div key={embed.id} className={`embed-container ${embed.active ? 'active' : ''}`}>
-            {embed.loading && (
-              <div className="embed-loading">
-                {/* Add loading spinner or placeholder here */}
-              </div>
-            )}
-            {embed.active && activeEmbedId === embed.id && (
-              <iframe
-                src={embed.url}
-                frameBorder="0"
-                scrolling="yes"
-                className="embed-iframe"
-                title={embed.title}
-                onLoad={() => {
-                  setEmbeds((prevEmbeds) =>
-                    prevEmbeds.map((prevEmbed) =>
-                      prevEmbed.id === embed.id ? { ...prevEmbed, loading: false } : prevEmbed
-                    )
-                  );
-                }}
-              />
+            {embed.active && (
+              <iframe src={embed.url} frameBorder="0" scrolling="yes" className="embed-iframe" title={embed.title} />
             )}
           </div>
         ))}
