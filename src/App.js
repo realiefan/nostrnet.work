@@ -244,6 +244,18 @@ const getDefaultEmbedsData = () => {
       active: false,
     },
     {
+      id: 'nostrbuild-embed',
+      url: 'https://nostr.build/',
+      title: 'Nostr Build',
+      active: false,
+    },
+    {
+      id: 'nostrnests-embed',
+      url: 'https://nostrnests.com/',
+      title: 'Nostr Nests',
+      active: false,
+    },
+    {
       id: 'coracle-embed',
       url: 'https://coracle.social/notes',
       title: 'Coracle',
@@ -265,6 +277,12 @@ const getDefaultEmbedsData = () => {
       id: 'zapstream-embed',
       url: 'https://zap.stream/',
       title: 'Zap Stream',
+      active: false,
+    },
+    {
+      id: 'zapstr-embed',
+      url: 'https://zapstr.live/',
+      title: 'Zapstr',
       active: false,
     },
   ];
