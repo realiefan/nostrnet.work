@@ -135,14 +135,15 @@ const App = () => {
       ) : (
         <div className="pt-1 mb-0">
           
-          <a rel="noopener noreferrer">
-            <button 
-              className="px-4 py-1 text-sm mr-2 rounded bg-gray-900 font-bold text-gray-200"
-              onClick={handleHomeButtonClick}
-            >
-              Home
-            </button>
-          </a>
+          <a href="/" rel="noopener noreferrer">
+  <button 
+    className="px-4 py-1 text-sm mr-2 rounded bg-gray-900 font-bold text-gray-200"
+    onClick={handleHomeButtonClick}
+  >
+    Home
+  </button>
+</a>
+
           {showSecondMenu ? (
             <button
               className="px-4 py-1 text-sm rounded mr-2 bg-purple-900 font-bold  text-gray-200 "
