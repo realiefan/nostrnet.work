@@ -237,6 +237,36 @@ const getDefaultEmbedsData = () => {
       title: 'Highlighter',
       active: false,
     },
+    {
+      id: 'habla-embed',
+      url: 'https://habla.news/',
+      title: 'Habla',
+      active: false,
+    },
+    {
+      id: 'nostrband-embed',
+      url: 'https://nostr.band/',
+      title: 'Nostr Band',
+      active: false,
+    },
+    {
+      id: 'coracle-embed',
+      url: 'https://coracle.social/notes',
+      title: 'Coracle',
+      active: false,
+    },
+    {
+      id: 'listr-embed',
+      url: 'https://listr.lol/',
+      title: 'Listr',
+      active: false,
+    },
+    {
+      id: 'zapstream-embed',
+      url: 'https://zap.stream/',
+      title: 'Zap Stream',
+      active: false,
+    },
   ];
 };
 
