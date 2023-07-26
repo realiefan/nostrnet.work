@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import './App.css';
 import Modal from './Modal';
+import * as serviceWorker from './service-worker';
 
 const EMBEDS_DATA_KEY = 'embedsData';
 
@@ -12,6 +13,7 @@ const App = () => {
   const [url, setUrl] = useState('');
   const [title, setTitle] = useState('');
   const [showSecondMenu, setShowSecondMenu] = useState(false);
+  const [installPromptEvent, setInstallPromptEvent] = useState(null);
 
   const toggleEmbed = useCallback((embedId) => {
     setEmbeds((prevEmbeds) =>
@@ -51,6 +53,23 @@ const App = () => {
     const storedEmbeds = storedEmbedsData ? JSON.parse(storedEmbedsData) : getEmbedsData();
     setEmbeds(storedEmbeds);
   }, []);
+
+  useEffect(() => {
+    // Listen for the "beforeinstallprompt" event
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      // Store the event to use it later
+      setInstallPromptEvent(e);
+      // Show a custom installation prompt here, e.g., display a button to install the app
+    });
+  }, []);
+
+  const handleInstallClick = () => {
+    if (installPromptEvent) {
+      // Show the browser's native installation prompt
+      installPromptEvent.prompt();
+    }
+  };
 
   const handleAddClick = useCallback(() => {
     setShowModal(true);
@@ -95,11 +114,20 @@ const App = () => {
         <div style={{ position: 'relative', marginBottom: '2rem' }}>
           <div>
             <h1 className="text-3xl font-bold mt-4 px-5 mb-2">NostrNet.work</h1>
-             <h2 className="text-sm font-bold mb-4 px-5"> It offers a unified dashboard to manage all your Nostr apps in one place.</h2>
+            <h2 className="text-sm font-bold mb-4 px-5">
+              It offers a unified dashboard to manage all your Nostr apps in one place.
+            </h2>
           </div>
           <div style={{ position: 'fixed', right: '5%', bottom: '0' }}>
             <button className="px-4 py-2 text-sm rounded font-bold text-white" onClick={handleDeleteAllClick}>
               Reset
+            </button>
+            <button
+              className="px-4 py-2 ml-2 text-sm rounded font-bold text-white"
+              onClick={handleInstallClick}
+              style={{ display: installPromptEvent ? 'block' : 'none' }}
+            >
+              Install
             </button>
           </div>
         </div>
@@ -133,7 +161,6 @@ const App = () => {
         </nav>
       ) : (
         <div className="pt-1 mb-0">
-          
           <a rel="noopener noreferrer">
             <button
               className="px-4 py-1 text-sm mr-2 rounded bg-gray-900 font-bold text-gray-200"
