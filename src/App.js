@@ -95,7 +95,7 @@ const App = () => {
         <div style={{ position: 'relative', marginBottom: '2rem' }}>
           <div>
             <h1 className="text-3xl font-bold mt-4 px-5 mb-2">NostrNet.work</h1>
-             <h2 className="text-sm font-bold mb-4 px-5">It offers a unified dashboard to manage all your Nostr apps in one place.PWA for a seamless app-like experience across all WebApps.</h2>
+             <h2 className="text-sm font-bold mb-4 px-5"> It offers a unified dashboard to manage all your Nostr apps in one place.</h2>
           </div>
           <div style={{ position: 'fixed', right: '5%', bottom: '0' }}>
             <button className="px-4 py-2 text-sm rounded font-bold text-white" onClick={handleDeleteAllClick}>
