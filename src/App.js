@@ -220,12 +220,6 @@ const getEmbedsData = () => {
 const getDefaultEmbedsData = () => {
   return [
     {
-      id: 'nostrchat-embed',
-      url: 'https://snort.social/notes',
-      title: 'Snort',
-      active: false,
-    },
-    {
       id: 'zaplife-embed',
       url: 'https://zaplife.lol/',
       title: 'Zaplife',
@@ -259,6 +253,12 @@ const getDefaultEmbedsData = () => {
       id: 'listr-embed',
       url: 'https://listr.lol/',
       title: 'Listr',
+      active: false,
+    },
+    {
+      id: 'chess-embed',
+      url: 'https://jesterui.github.io/',
+      title: 'Nostr Chess',
       active: false,
     },
     {
