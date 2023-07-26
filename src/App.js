@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-
 import './App.css';
 import Modal from './Modal';
 
@@ -189,6 +188,7 @@ const App = () => {
           </div>
         </nav>
       )}
+      <div className="full-width-container"></div>
       <div className="flex flex-col items-center mt-2">
         {memoizedEmbeds.map((embed) => (
           <div key={embed.id} className={`embed-container ${embed.active ? 'active' : ''}`}>
