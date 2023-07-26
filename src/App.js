@@ -95,7 +95,8 @@ const App = () => {
         <div style={{ position: 'relative', marginBottom: '2rem' }}>
           <div>
             <h1 className="text-3xl font-bold mt-4 px-5 mb-2">NostrNet.work</h1>
-             <h2 className="text-sm font-bold mb-4 px-5"> It offers a unified dashboard to manage all your Nostr apps in one place.</h2>
+             <h2 className="text-sm font-bold mb-4 px-5">One PWA to organize all Nostr WebApps and other PWAs
+              & use any website as a Native App. (Mobile only)</h2>
           </div>
           <div style={{ position: 'fixed', right: '5%', bottom: '0' }}>
             <button className="px-4 py-2 text-sm rounded font-bold text-white" onClick={handleDeleteAllClick}>
@@ -187,6 +188,7 @@ const App = () => {
           </div>
         </nav>
       )}
+      <div className="full-width-container"></div>
       <div className="flex flex-col items-center mt-2">
         {memoizedEmbeds.map((embed) => (
           <div key={embed.id} className={`embed-container ${embed.active ? 'active' : ''}`}>
@@ -217,65 +219,10 @@ const getEmbedsData = () => {
 
 const getDefaultEmbedsData = () => {
   return [
-
     {
-      id: 'coracle-embed',
-      url: 'https://coracle.social/notes',
-      title: 'Coracle',
-      active: false,
-    },
-    {
-      id: 'habla-embed',
-      url: 'https://habla.news/',
-      title: 'Habla',
-      active: false,
-    },
-    {
-      id: 'listr-embed',
-      url: 'https://listr.lol/',
-      title: 'Listr',
-      active: false,
-    },
-    {
-      id: 'nostrband-embed',
-      url: 'https://nostr.band/',
-      title: 'Nostr Band',
-      active: false,
-    },
-    {
-      id: 'nostrbuild-embed',
-      url: 'https://nostr.build/',
-      title: 'Nostr Build',
-      active: false,
-    },
-    {
-      id: 'nostrnests-embed',
-      url: 'https://nostrnests.com/',
-      title: 'Nostr Nests',
-      active: false,
-    },
-    {
-      id: 'chess-embed',
-      url: 'https://jesterui.github.io/',
-      title: 'Nostr Chess',
-      active: false,
-    },
-    {
-      id: 'satellite-embed',
-      url: 'https://satellite.earth/',
-      title: 'Satellite',
-      active: false,
-    },
-    {
-      id: 'zapstream-embed',
-      url: 'https://zap.stream/',
-      title: 'Zap Stream',
-      active: false,
-    },
-    {
-      id: 'zapstr-embed',
-      url: 'https://zapstr.live/',
-      title: 'Zapstr',
+      id: 'nostrchat-embed',
+      url: 'https://snort.social/notes',
+      title: 'Snort',
       active: false,
     },
     {
@@ -284,8 +231,13 @@ const getDefaultEmbedsData = () => {
       title: 'Zaplife',
       active: false,
     },
+    {
+      id: 'nostrnests-embed',
+      url: 'https://highlighter.com/global/newest',
+      title: 'Highlighter',
+      active: false,
+    },
   ];
 };
 
 export default App;
-i want to add proper pwa feature that should be suppord on add browser & it should also tell user to turn it into pwa
