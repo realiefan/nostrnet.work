@@ -219,22 +219,23 @@ const getEmbedsData = () => {
 
 const getDefaultEmbedsData = () => {
   return [
+
     {
-      id: 'zaplife-embed',
-      url: 'https://zaplife.lol/',
-      title: 'Zaplife',
-      active: false,
-    },
-    {
-      id: 'nostrnests-embed',
-      url: 'https://highlighter.com/global/newest',
-      title: 'Highlighter',
+      id: 'coracle-embed',
+      url: 'https://coracle.social/notes',
+      title: 'Coracle',
       active: false,
     },
     {
       id: 'habla-embed',
       url: 'https://habla.news/',
       title: 'Habla',
+      active: false,
+    },
+    {
+      id: 'listr-embed',
+      url: 'https://listr.lol/',
+      title: 'Listr',
       active: false,
     },
     {
@@ -256,21 +257,15 @@ const getDefaultEmbedsData = () => {
       active: false,
     },
     {
-      id: 'coracle-embed',
-      url: 'https://coracle.social/notes',
-      title: 'Coracle',
-      active: false,
-    },
-    {
-      id: 'listr-embed',
-      url: 'https://listr.lol/',
-      title: 'Listr',
-      active: false,
-    },
-    {
       id: 'chess-embed',
       url: 'https://jesterui.github.io/',
       title: 'Nostr Chess',
+      active: false,
+    },
+    {
+      id: 'satellite-embed',
+      url: 'https://satellite.earth/',
+      title: 'Satellite',
       active: false,
     },
     {
@@ -283,6 +278,12 @@ const getDefaultEmbedsData = () => {
       id: 'zapstr-embed',
       url: 'https://zapstr.live/',
       title: 'Zapstr',
+      active: false,
+    },
+    {
+      id: 'zaplife-embed',
+      url: 'https://zaplife.lol/',
+      title: 'Zaplife',
       active: false,
     },
   ];
