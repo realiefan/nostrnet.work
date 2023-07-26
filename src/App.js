@@ -284,7 +284,7 @@ const getDefaultEmbedsData = () => {
       url: 'https://zaplife.lol/',
       title: 'Zaplife',
       active: false,
-    },
+    }
   ];
 };
 
