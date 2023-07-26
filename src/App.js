@@ -187,7 +187,6 @@ const App = () => {
           </div>
         </nav>
       )}
-      <div className="full-width-container"></div>
       <div className="flex flex-col items-center mt-2">
         {memoizedEmbeds.map((embed) => (
           <div key={embed.id} className={`embed-container ${embed.active ? 'active' : ''}`}>
