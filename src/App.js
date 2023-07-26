@@ -96,7 +96,7 @@ const App = () => {
           <div>
             <h1 className="text-3xl font-bold mt-4 px-5 mb-2">NostrNet.work</h1>
              <h2 className="text-sm font-bold mb-4 px-5">One PWA to organize all Nostr WebApps and other PWAs
-              & use any website as a Native App. (Mobile only)</h2>
+              & use any website as a Native App.</h2>
           </div>
           <div style={{ position: 'fixed', right: '5%', bottom: '0' }}>
             <button className="px-4 py-2 text-sm rounded font-bold text-white" onClick={handleDeleteAllClick}>
