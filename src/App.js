@@ -115,7 +115,7 @@ const App = () => {
           <div>
             <h1 className="text-3xl font-bold mt-4 px-5 mb-2">NostrNet.work</h1>
             <h2 className="text-sm font-bold mb-4 px-5">
-              It offers a unified dashboard to manage all your Nostr apps in one place.
+              It offers a unified dashboard to manage all your Nostr apps in one place..
             </h2>
           </div>
           <div style={{ position: 'fixed', right: '5%', bottom: '0' }}>
