@@ -262,12 +262,7 @@ const getDefaultEmbedsData = () => {
       title: 'Nostr Nests',
       active: false,
     },
-    {
-      id: 'chess-embed',
-      url: 'https://jesterui.github.io/',
-      title: 'Nostr Chess',
-      active: false,
-    },
+   
     {
       id: 'satellite-embed',
       url: 'https://satellite.earth/',
