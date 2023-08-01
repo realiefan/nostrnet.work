@@ -223,7 +223,7 @@ const getDefaultEmbedsData = () => {
     {
       id: 'chess-embed',
       url: 'https://jesterui.github.io/',
-      title: 'Nostr Chess',
+      title: 'Chess',
       active: false,
     },
     {
