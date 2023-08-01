@@ -1,6 +1,6 @@
 // sw.js
 
-const CACHE_NAME = 'my-pwa-cache-v1';
+const CACHE_NAME = 'my-pwa-cache-v2';
 const urlsToCache = ['/', '/index.html', '/favicon.ico', '/logo192.png', '/logo512.png', '/App.css', '/Modal.js'];
 
 self.addEventListener('install', (event) => {
